@@ -96,9 +96,9 @@ namespace Nafis.Services.Implementation
 {
     /// <summary>
     /// Core implementation containing all bid-related business logic.
-    /// This class is internal and used by specialized service facades.
+    /// This class is used by specialized service facades.
     /// </summary>
-    internal class BidServiceCore : IBidService
+    public class BidServiceCore
     {
         private readonly ICrossCuttingRepository<Bid, long> _bidRepository;
         private readonly ICrossCuttingRepository<RFP, long> _rfpRepository;
@@ -109,7 +109,7 @@ namespace Nafis.Services.Implementation
         private readonly ICrossCuttingRepository<Inquiry, long> _inquiryRepository;
         private readonly ICrossCuttingRepository<TenderSubmitQuotation, long> _tenderSubmitQuotationRepository;
         private readonly ICrossCuttingRepository<UserFavBidList, long> _userFavBidList;
-        private readonly ILoggerService<BidService> _logger;
+        private readonly ILoggerService<BidServiceCore> _logger;
         private readonly IMapper _mapper;
         private readonly IHelperService _helperService;
         private readonly IRandomGeneratorService _randomGeneratorService;
