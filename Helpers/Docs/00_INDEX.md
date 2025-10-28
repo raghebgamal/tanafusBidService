@@ -49,35 +49,40 @@ Each document includes:
 
 ---
 
-### 3. **BidUtilityHelper_COMPLETE.md** 🔄 COMING SOON
+### 3. **BidUtilityHelper_COMPLETE.md** ⭐ COMPLETED
 **Purpose:** Utility methods for common bid operations
 
-**Methods:** 13 methods
-- Site map updates
-- Bid status checks
-- Bid type checks
-- Display name getters
-- Attachment validation
-- Reference number formatting
+**Methods Documented:** 12 methods
+- `UpdateSiteMapLastModificationDateIfSpecificDataChanged` - Site map updates
+- `ValidateBidInvitationAttachmentsNew` - Attachment validation
+- `CheckIfWeNeedAddAttachmentNew` - Attachment check
+- `FormatBidRefNumber` - Reference number formatting
+- `IsBidDraft` / `IsBidPublished` / `IsBidClosed` - Status checks
+- `IsPublicBid` / `IsPrivateBid` / `IsHabilitationBid` - Type checks
+- `GetBidTypeDisplayName` / `GetBidStatusDisplayName` - Display names
 
 **Lines Saved:** ~40 lines from BidServiceCore
 
-**Status:** Documentation in progress
+**[Read Full Documentation →](./BidUtilityHelper_COMPLETE.md)**
 
 ---
 
-### 4. **BidQueryHelper_COMPLETE.md** 🔄 COMING SOON
+### 4. **BidQueryHelper_COMPLETE.md** ⭐ COMPLETED
 **Purpose:** Reusable query builders and filters
 
-**Methods:** 15+ methods
-- Filter builders for common queries
-- Query composition
-- Ordering helpers
-- Expression combiners
+**Methods Documented:** 14 methods
+- `GetPublishedBidsFilter` / `GetDraftBidsFilter` - Status filters
+- `GetPublicBidsFilter` / `GetPrivateBidsFilter` - Visibility filters
+- `GetActiveBidsFilter` / `GetExpiredBidsFilter` - Time-based filters
+- `GetBidsByAssociationFilter` / `GetBidsByRegionFilter` / `GetBidsByIndustryFilter` - Entity filters
+- `GetBidsByDateRangeFilter` - Date range filter
+- `GetBidsWithTermsBookBoughtFilter` - Payment filter
+- `CombineFiltersWithAnd` - Expression composition
+- `GetDefaultBidOrdering` / `GetBidOrderingByDeadline` - Ordering helpers
 
 **Lines Saved:** ~30 lines from BidServiceCore
 
-**Status:** Documentation in progress
+**[Read Full Documentation →](./BidQueryHelper_COMPLETE.md)**
 
 ---
 
@@ -109,9 +114,9 @@ Each document includes:
 |--------------|---------|-------------|--------------------|
 | BidValidationHelper | 6 | ~70 | High |
 | BidCalculationHelper | 4 | ~50 | Medium |
-| BidUtilityHelper | 13 | ~40 | Low |
-| BidQueryHelper | 15+ | ~30 | Medium |
-| **TOTAL** | **38+** | **~190** | **Significant** |
+| BidUtilityHelper | 12 | ~40 | Low |
+| BidQueryHelper | 14 | ~30 | Medium |
+| **TOTAL** | **36** | **~190** | **Significant** |
 
 **Original BidServiceCore:** 10,429 lines
 **After Full Refactor:** ~9,000-9,500 lines
@@ -246,8 +251,8 @@ For each method:
 |----------|--------|--------------|-------|
 | BidValidationHelper_COMPLETE.md | ✅ Complete | 2024 | ~20 |
 | BidCalculationHelper_COMPLETE.md | ✅ Complete | 2024 | ~18 |
-| BidUtilityHelper_COMPLETE.md | 🔄 In Progress | - | - |
-| BidQueryHelper_COMPLETE.md | 🔄 In Progress | - | - |
+| BidUtilityHelper_COMPLETE.md | ✅ Complete | 2024 | ~25 |
+| BidQueryHelper_COMPLETE.md | ✅ Complete | 2024 | ~30 |
 
 ---
 
@@ -303,14 +308,13 @@ For each method:
 
 ## 📝 Summary
 
-**2 Complete Docs Available Now:**
+**ALL 4 Helper Documentation Files COMPLETE!** ✅
+
 - ✅ BidValidationHelper (6 methods, ~70 lines saved)
 - ✅ BidCalculationHelper (4 methods, ~50 lines saved)
+- ✅ BidUtilityHelper (12 methods, ~40 lines saved)
+- ✅ BidQueryHelper (14 methods, ~30 lines saved)
 
-**2 More Coming:**
-- 🔄 BidUtilityHelper (13 methods, ~40 lines saved)
-- 🔄 BidQueryHelper (15+ methods, ~30 lines saved)
+**Total:** 36 methods documented, ~190 lines saved, Significantly reduced complexity
 
-**Total when complete:** 38+ methods, ~190 lines saved, Significantly reduced complexity
-
-Start with BidValidationHelper and BidCalculationHelper - they're complete and ready to use!
+All helpers are fully documented and ready to use!
