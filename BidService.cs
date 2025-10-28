@@ -16,7 +16,7 @@ namespace Nafis.Services.Implementation
     /// Facade service that delegates to specialized bid services.
     /// This provides a unified interface while maintaining separation of concerns.
     /// </summary>
-    public class BidService : IBidService
+    public class BidService
     {
         private readonly IBidCreationService _bidCreationService;
         private readonly IBidManagementService _bidManagementService;
