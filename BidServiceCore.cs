@@ -59,6 +59,7 @@ using Nafis.Services.Extensions;
 using Nafis.Services.Hubs;
 using Nafis.Services.Implementation.CommonServices.NotificationHelper;
 using Nafis.Services.Implementation.Hangfire;
+using Nafis.Services.Implementation.Helpers;
 using RedLockNet;
 using System;
 using System.Collections.Generic;
@@ -467,11 +468,13 @@ namespace Nafis.Services.Implementation
                 if ((usr.UserType == UserType.SuperAdmin || usr.UserType == UserType.Admin) && model.Id == 0)
                     return OperationResult<AddBidResponse>.Fail(HttpErrorCode.NotAuthorized, RegistrationErrorCodes.YOU_ARE_NOT_AUTHORIZED);
 
-                var adjustBidAddressesToTheEndOfDayResult = AdjustRequestBidAddressesToTheEndOfTheDay(model);
+                // ✅ Using BidValidationHelper instead of private method
+                var adjustBidAddressesToTheEndOfDayResult = BidValidationHelper.AdjustRequestBidAddressesToTheEndOfTheDay(model);
                 if (!adjustBidAddressesToTheEndOfDayResult.IsSucceeded)
                     return OperationResult<AddBidResponse>.Fail(adjustBidAddressesToTheEndOfDayResult.HttpErrorCode, adjustBidAddressesToTheEndOfDayResult.Code);
 
-                if (IsRequiredDataForNotSaveAsDraftAdded(model))
+                // ✅ Using BidValidationHelper instead of private method
+                if (BidValidationHelper.IsRequiredDataForNotSaveAsDraftAdded(model))
                     return OperationResult<AddBidResponse>.Fail(HttpErrorCode.InvalidInput, CommonErrorCodes.INVALID_INPUT);
 
 
@@ -501,11 +504,13 @@ namespace Nafis.Services.Implementation
                 }
 
 
-                ValidateBidFinancialValueWithBidType(model);
+                // ✅ Using BidValidationHelper instead of private method
+                BidValidationHelper.ValidateBidFinancialValueWithBidType(model);
 
                 if (model.Id != 0)
                 {
-                    if (ValidateBidInvitationAttachmentsNew(model))
+                    // ✅ Using BidUtilityHelper instead of private method
+                    if (BidUtilityHelper.ValidateBidInvitationAttachmentsNew(model))
                     {
                         return OperationResult<AddBidResponse>.Fail(HttpErrorCode.InvalidInput, BidErrorCodes.ADDING_INVITATION_ATTACHMENTS_REQUIRED);
                     }
@@ -538,13 +543,15 @@ namespace Nafis.Services.Implementation
                     if (bid.BidStatusId != (int)TenderStatus.Rejected && bid.BidStatusId != (int)TenderStatus.Draft && (usr.UserType == UserType.Association || usr.UserType == UserType.Donor))
                         return OperationResult<AddBidResponse>.Fail(HttpErrorCode.NotAuthorized, BidErrorCodes.YOU_CAN_EDIT_BID_WHEN_IT_IS_DRAFT_OR_REJECTED_ONLY);
 
-                    UpdateSiteMapLastModificationDateIfSpecificDataChanged(bid, model);
+                    // ✅ Using BidUtilityHelper instead of private method
+                    BidUtilityHelper.UpdateSiteMapLastModificationDateIfSpecificDataChanged(bid, model);
                     bidId = bid.Id;
                     bid.BidName = model.BidName;
                     bid.Objective = model.Objective;
                     if (await CheckIfWeCanUpdatePriceOfBid(usr, bid))
                     {
-                        var calculationResult = CalculateAndUpdateBidPrices(model.Association_Fees, generalSettings, bid);
+                        // ✅ Using BidCalculationHelper instead of private method
+                        var calculationResult = BidCalculationHelper.CalculateAndUpdateBidPrices(model.Association_Fees, generalSettings, bid);
                         if (!calculationResult.IsSucceeded)
                             return OperationResult<AddBidResponse>.Fail(calculationResult.HttpErrorCode, calculationResult.Code, calculationResult.ErrorMessage);
                     }
@@ -678,15 +685,18 @@ namespace Nafis.Services.Implementation
                 else
                 {
 
-                    var validationOfBidDates = ValidateBidDates(model, null, generalSettings);
+                    // ✅ Using BidValidationHelper instead of private method
+                    var validationOfBidDates = BidValidationHelper.ValidateBidDates(model, null, generalSettings, checkLastReceivingEnqiryDate);
                     if (!validationOfBidDates.IsSucceeded)
                         return OperationResult<AddBidResponse>.Fail(validationOfBidDates.HttpErrorCode, validationOfBidDates.Code, validationOfBidDates.ErrorMessage);
 
                     var entity = _mapper.Map<Bid>(model);
-                    if (ValidateBidInvitationAttachmentsNew(model))
+                    // ✅ Using BidUtilityHelper instead of private method
+                    if (BidUtilityHelper.ValidateBidInvitationAttachmentsNew(model))
                         return OperationResult<AddBidResponse>.Fail(HttpErrorCode.InvalidInput, BidErrorCodes.ADDING_INVITATION_ATTACHMENTS_REQUIRED);
 
-                    var calculationResult = CalculateAndUpdateBidPrices(model.Association_Fees, generalSettings, entity);
+                    // ✅ Using BidCalculationHelper instead of private method
+                    var calculationResult = BidCalculationHelper.CalculateAndUpdateBidPrices(model.Association_Fees, generalSettings, entity);
                     if (!calculationResult.IsSucceeded)
                         return OperationResult<AddBidResponse>.Fail(calculationResult.HttpErrorCode, calculationResult.Code, calculationResult.ErrorMessage);
                     //generate code
